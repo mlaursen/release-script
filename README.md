@@ -1,2 +1,76 @@
-# release-script
-This is the normal npm release script I use.
+# @mlaursen/release-script
+
+This is the normal npm release script I use. This requires:
+
+- [changesets](https://github.com/changesets/changesets) to handle bumping
+  versions and generating changelogs.
+- A Github [release token](https://github.com/settings/personal-access-tokens)
+  - The token only needs repository access
+  - This is normally stored as `GITHUB_TOKEN` in an `.env.local` file that
+    should not be committed
+
+## Installation
+
+The release script relies on
+[changesets](https://github.com/changesets/changesets) to handle bumping
+versions and generating changelogs.
+
+```sh
+npm install --save-dev @mlaursen/release-script \
+  @changesets/cli \
+  tsx
+```
+
+## Usage
+
+Create a `scripts/release.ts` file with:
+
+```ts
+import { release } from "@mlaursen/release-script";
+
+await release({
+  repo: "{{REPO_NAME}}", // i.e. eslint-config
+
+  // if the repo is not under `mlaursen` for some reason
+  // owner: "mlaursen",
+
+  // If there is a custom clean command for releases. `clean` is the default
+  // cleanCommand: "clean",
+
+  // If there is a custom build command for releases. `build` is the default
+  // buildCommand: "build",
+
+  // An optional flag if the build step should be skipped. `false` by default
+  // skipBuild: process.argv.includes("--skip-build"),
+
+  // This is useful for monorepos where only a single Github release needs to
+  // be created. Defaults to `JSON.parse(await readFile("package.json)).name`
+  // mainPackage: "{{PACKAGE_NAME}}",
+
+  // If the version message needs to be customized. The following is the default
+  // versionMessage: "build(version): version package",
+
+  // An optional `.env` file path that includes the `GITLAB_TOKEN` environment variable.
+  // envPath: ".env.local",
+});
+```
+
+Next, update `package.json` to include the release script:
+
+```diff
+   "scripts": {
+     "prepare": "husky",
+     "typecheck": "tsc --noEmit",
+     "check-format": "prettier --check .",
+     "format": "prettier --write .",
+     "clean": "rm -rf dist",
+     "build": "tsc -p tsconfig.json",
++    "release": "tsx index.ts"
+   },
+```
+
+Finally, run the release script whenever a new release should go out:
+
+```sh
+pnpm release
+```
