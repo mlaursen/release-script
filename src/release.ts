@@ -39,8 +39,8 @@ export async function release(options: ReleaseOptions): Promise<void> {
   const pkgManager = await getPackageManager();
 
   if (!skipBuild) {
-    exec(cleanCommand);
-    exec(buildCommand);
+    exec(`${pkgManager} ${cleanCommand}`);
+    exec(`${pkgManager} ${buildCommand}`);
   }
   exec(`${pkgManager} changeset`, { stdio: "inherit" });
   await continueRelease();
