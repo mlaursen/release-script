@@ -59,8 +59,23 @@ await release({
   // If the version message needs to be customized. The following is the default
   // versionMessage: "build(version): version package",
 
-  // An optional `.env` file path that includes the `GITLAB_TOKEN` environment variable.
+  // An optional `.env` file path that includes the `GITLAB_TOKEN` environment
+  // variable.
   // envPath: ".env.local",
+
+  // An optional async function to get the next release tag name. The default
+  // is shown below:
+  // getTagName: async () => {
+  //   const latestTag = await (
+  //     await import("@react-md/release-script")
+  //   ).getLatestTag();
+  //   let tagName =
+  //     mainPackage && /@\d/.test(latestTag)
+  //       ? latestTag.replace(/.+(@\d)/, `${mainPackage}$1`)
+  //       : latestTag;
+  //
+  //   return tagName;
+  // },
 });
 ```
 

@@ -1,4 +1,4 @@
-import { release } from "./src/release.js";
+import { release } from "./src/index.js";
 
 await release({
   repo: "release-script",

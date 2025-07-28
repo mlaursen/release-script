@@ -20,9 +20,8 @@ export interface ConfigurableCreateReleaseOptions {
 
 export interface CreateReleaseOptions extends ConfigurableCreateReleaseOptions {
   body: string;
-  version: string;
   override?: boolean;
-  tagPrefix: string;
+  tagName: string;
   prerelease: boolean;
 }
 
@@ -30,14 +29,13 @@ export async function createRelease(
   options: CreateReleaseOptions
 ): Promise<void> {
   const {
-    version,
     body,
-    tagPrefix,
     override,
     owner = "mlaursen",
     repo,
     prerelease,
     envPath = ".env.local",
+    tagName,
   } = options;
 
   dotenv.config({ path: envPath, override, quiet: true });
@@ -48,7 +46,7 @@ export async function createRelease(
       {
         owner,
         repo,
-        tag_name: `${tagPrefix}@${version}`,
+        tag_name: tagName,
         body,
         prerelease,
       }

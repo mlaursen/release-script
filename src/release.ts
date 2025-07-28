@@ -1,13 +1,12 @@
 import { execSync, type ExecSyncOptions } from "node:child_process";
 import { continueRelease } from "./continueRelease.js";
-import { getCurrentChangeset } from "./getCurrentChangeset.js";
-import { getPackageManager } from "./getPackageManager.js";
-import { getReleaseVersion } from "./getReleaseVersion.js";
+import { createGetTagName } from "./createGetTagName.js";
 import {
   ConfigurableCreateReleaseOptions,
   createRelease,
 } from "./createRelease.js";
-import { getTagPrefix } from "./getTagPrefix.js";
+import { getCurrentChangeset } from "./getCurrentChangeset.js";
+import { getPackageManager } from "./getPackageManager.js";
 
 const exec = (command: string, opts?: ExecSyncOptions): void => {
   console.log(command);
@@ -22,6 +21,8 @@ export interface ReleaseOptions extends ConfigurableCreateReleaseOptions {
   mainPackage?: string;
 
   versionMessage?: string;
+
+  getTagName?: () => Promise<string>;
 }
 
 export async function release(options: ReleaseOptions): Promise<void> {
@@ -33,6 +34,7 @@ export async function release(options: ReleaseOptions): Promise<void> {
     cleanCommand = "clean",
     buildCommand = "build",
     mainPackage,
+    getTagName = createGetTagName(mainPackage),
     versionMessage = "build(version): version package",
   } = options;
 
@@ -53,21 +55,21 @@ export async function release(options: ReleaseOptions): Promise<void> {
   // handle the first release
   exec("git add CHANGELOG.md");
   exec("git add -u");
-
-  const version = await getReleaseVersion(mainPackage);
   await continueRelease();
 
   exec(`git commit -m "${versionMessage}"`);
   exec(`${pkgManager} changeset publish`, { stdio: "inherit" });
+
+  const tagName = await getTagName();
+  await continueRelease();
   exec("git push --follow-tags");
 
   await createRelease({
     owner,
     repo,
     body: changeset,
-    tagPrefix: await getTagPrefix(mainPackage),
-    version,
+    tagName,
     envPath,
-    prerelease: version.includes("next"),
+    prerelease: /-(alpha|next|beta)\.\d+$/.test(tagName),
   });
 }
