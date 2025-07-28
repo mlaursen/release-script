@@ -1,5 +1,11 @@
 # @mlaursen/release-script
 
+## 0.0.3
+
+### Patch Changes
+
+- Hopefully fixed reusing existing tags instead of creating a new tag for Github releases.
+
 ## 0.0.2
 
 ### Patch Changes

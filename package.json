@@ -1,7 +1,7 @@
 {
   "name": "@mlaursen/release-script",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The release script I normally use for packages I publish to npm",
   "repository": "https://github.com/mlaursen/release-script.git",
   "author": "Mikkel Laursen <mlaursen03@gmail.com>",
