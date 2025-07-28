@@ -40,7 +40,7 @@ export async function createRelease(
     envPath = ".env.local",
   } = options;
 
-  dotenv.config({ path: envPath, override });
+  dotenv.config({ path: envPath, override, quiet: true });
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
   try {
     const response = await octokit.request(
