@@ -16,9 +16,18 @@ The release script relies on
 versions and generating changelogs.
 
 ```sh
-npm install --save-dev @mlaursen/release-script \
+pnpm install --save-dev @mlaursen/release-script \
   @changesets/cli \
   tsx
+```
+
+Setup the `.changeset` dir if needed:
+
+```sh
+pnpm changeset init
+git add .changeset
+git add -u
+git commit -m "build: setup changesets"
 ```
 
 ## Usage
