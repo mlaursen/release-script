@@ -20,14 +20,14 @@ export async function getTagPrefix(mainPackage?: string): Promise<string> {
     console.error("Unable to get package name from package.json");
   }
 
-  if (
+  while (
     !pkg ||
     !(await confirm({ message: `Use ${pkg} as the next tag name?` }))
   ) {
-    return await input({
+    pkg = await input({
       message: "Enter the next tag name prefix",
     });
   }
 
-  process.exit(1);
+  return pkg;
 }

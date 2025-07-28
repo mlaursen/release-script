@@ -19,7 +19,7 @@
     "dist/"
   ],
   "exports": {
-    ".": "./dist/index.js",
+    ".": "./dist/release.js",
     "./package.json": "./package.json"
   },
   "bugs": {

@@ -50,6 +50,8 @@ export async function release(options: ReleaseOptions): Promise<void> {
 
   const changeset = await getCurrentChangeset();
   exec("pnpm changeset version", { stdio: "inherit" });
+  // handle the first release
+  exec("git add CHANGELOG.md");
   exec("git add -u");
 
   const version = await getReleaseVersion(mainPackage);
