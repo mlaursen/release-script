@@ -1,5 +1,11 @@
 # @mlaursen/release-script
 
+## 0.0.4
+
+### Patch Changes
+
+- Fixed monorepos failing since there is no root CHANGELOG.md.
+
 ## 0.0.3
 
 ### Patch Changes
