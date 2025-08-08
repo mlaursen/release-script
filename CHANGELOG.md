@@ -1,5 +1,11 @@
 # @mlaursen/release-script
 
+## 0.0.5
+
+### Patch Changes
+
+- Added suupport for repos that do not have a build step
+
 ## 0.0.4
 
 ### Patch Changes
