@@ -49,7 +49,7 @@ await release({
   // If there is a custom build command for releases. `build` is the default
   // buildCommand: "build",
 
-  // An optional flag if the build step should be skipped. `false` by default
+  // An optional flag if the build step should be skipped. `!buildCommand` by default
   // skipBuild: process.argv.includes("--skip-build"),
 
   // This is useful for monorepos where only a single Github release needs to
@@ -97,4 +97,18 @@ Finally, run the release script whenever a new release should go out:
 
 ```sh
 pnpm release
+```
+
+## Alpha Releases
+
+Use the changesets api to enter the pre-release flow:
+
+```sh
+pnpm changeset enter pre
+```
+
+Once ready to do a real release:
+
+```sh
+pnpm changeset exit pre
 ```

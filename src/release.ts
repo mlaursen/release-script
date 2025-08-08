@@ -14,12 +14,26 @@ const exec = (command: string, opts?: ExecSyncOptions): void => {
 };
 
 export interface ReleaseOptions extends ConfigurableCreateReleaseOptions {
+  /**
+   * @defaultValue `!buildCommand`
+   */
   skipBuild?: boolean;
+
+  /**
+   * @defaultValue `"clean"`
+   */
   cleanCommand?: string;
+
+  /**
+   * @defaultValue `"build"`
+   */
   buildCommand?: string;
 
   mainPackage?: string;
 
+  /**
+   * @defaultValue `"build(version): version package"`
+   */
   versionMessage?: string;
 
   getTagName?: () => Promise<string>;
@@ -30,9 +44,9 @@ export async function release(options: ReleaseOptions): Promise<void> {
     owner,
     repo,
     envPath,
-    skipBuild,
     cleanCommand = "clean",
     buildCommand = "build",
+    skipBuild = !buildCommand,
     mainPackage,
     getTagName = createGetTagName(mainPackage),
     versionMessage = "build(version): version package",
