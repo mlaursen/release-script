@@ -1,6 +1,6 @@
 # @mlaursen/release-script
 
-## This project has been moved to https://github.com/mlaursen/npm-packages/packages/release-script
+## This project has been moved to https://github.com/mlaursen/npm-packages/tree/main/packages/release-script
 This is the normal npm release script I use. This requires:
 
 - [changesets](https://github.com/changesets/changesets) to handle bumping
