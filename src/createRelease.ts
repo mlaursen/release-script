@@ -11,11 +11,16 @@ export interface ConfigurableCreateReleaseOptions {
   owner?: string;
 
   /**
-   * The `.env` file to load to get the `GITHUB_TOKEN` environment variable.
+   * The `.env` file to load to get the {@link tokenName} environment variable.
    *
    * @defaultValue `".env.local"`
    */
   envPath?: string;
+
+  /**
+   * @defaultValue `"GITHUB_RELEASE_TOKEN"`
+   */
+  tokenName?: string;
 }
 
 export interface CreateReleaseOptions extends ConfigurableCreateReleaseOptions {
@@ -36,10 +41,11 @@ export async function createRelease(
     prerelease,
     envPath = ".env.local",
     tagName,
+    tokenName = "GITHUB_RELEASE_TOKEN",
   } = options;
 
   dotenv.config({ path: envPath, override, quiet: true });
-  const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+  const octokit = new Octokit({ auth: process.env[tokenName] });
   try {
     const response = await octokit.request(
       "POST /repos/{owner}/{repo}/releases",
