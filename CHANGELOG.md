@@ -1,5 +1,18 @@
 # @mlaursen/release-script
 
+## 0.0.6
+
+### Patch Changes
+
+- BREAKING CHANGES
+  - Default token name is now `GITHUB_RELEASE_TOKEN` instead of `GITHUB_TOKEN`
+
+  Features
+  - Added `tokenName` option with defaults to `GITHUB_RELEASE_TOKEN`
+
+  Bug fixes
+  - Continue release should correctly stall until accepted
+
 ## 0.0.5
 
 ### Patch Changes
